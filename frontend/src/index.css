@@ -1,0 +1,11 @@
+main {
+  min-height: 80vh;
+}
+
+.bg-color {
+  background: #499ee5;
+}
+
+.ml-auto {
+  margin-left: auto;
+}
