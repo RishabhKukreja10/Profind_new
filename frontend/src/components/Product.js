@@ -3,13 +3,13 @@ import { Card, Row, Col } from 'react-bootstrap'
 
 const Product = ({ product }) => {
   return (
-    <Card className='my-3 mx-3 py-3 rounded'>
+    <Card className='my-3 mx-3 py-3 px-3 rounded'>
       <Card.Img src={product.image} variant='top' />
 
       <Card.Body>
         {/* <a href={`/product/${product._id}`}> */}
         <Card.Title as='div'>
-          <strong>{product.name}</strong>
+          <b>{product.name}</b>
         </Card.Title>
         {/* </a> */}
         <Row>
@@ -21,7 +21,7 @@ const Product = ({ product }) => {
                   src='../images/Flipkart.png'
                   alt='Flipkart Symbol'
                 />
-                Flipkart
+                <p>Flipkart</p>
               </div>
               <Card.Text as='p'>₹{product.price}</Card.Text>
             </Card.Text>
@@ -34,7 +34,7 @@ const Product = ({ product }) => {
                   src='../images/Amazon.jpg'
                   alt='Amazon Symbol'
                 />
-                Amazon
+                <p>Amazon</p>
               </div>
               <Card.Text as='p'>₹{product.price}</Card.Text>
             </Card.Text>

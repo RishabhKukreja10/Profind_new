@@ -12,7 +12,7 @@ main {
 
 .flipkart {
   height: 20px;
-  width: 40px;
+  width: 30px;
 }
 
 .amazon {
@@ -25,4 +25,35 @@ main {
   height: fit-content;
   width: fit-content;
   background-color: #f7f7f7;
+}
+
+.form-div {
+  display: flex;
+}
+
+/* carousel */
+.carousel-item-next,
+.carousel-item-prev,
+.carousel-item.active {
+  display: flex;
+}
+
+.carousel-caption {
+  position: absolute;
+  top: 0;
+}
+
+.carousel-caption h2 {
+  color: #fff;
+}
+
+.carousel img {
+  height: 300px;
+  width: 30px;
+  margin: 40px;
+  /* border-radius: 50%; */
+}
+
+.carousel a {
+  margin: 0 auto;
 }

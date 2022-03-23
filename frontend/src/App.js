@@ -13,6 +13,7 @@ const App = () => {
         <Container>
           <Routes>
             <Route path='/' element={<HomeScreen />} exact />
+            <Route path='/search/:keyword' element={<HomeScreen />} />
           </Routes>
         </Container>
       </main>
