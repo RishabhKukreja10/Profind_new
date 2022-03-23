@@ -9,3 +9,20 @@ main {
 .ml-auto {
   margin-left: auto;
 }
+
+.flipkart {
+  height: 20px;
+  width: 40px;
+}
+
+.amazon {
+  height: 20px;
+  width: 30px;
+}
+
+.flipkart_div {
+  padding: 10px;
+  height: fit-content;
+  width: fit-content;
+  background-color: #f7f7f7;
+}
