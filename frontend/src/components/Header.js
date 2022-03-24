@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
-import { Container, Navbar, Nav, Button } from 'react-bootstrap'
+import { Container, Navbar, Nav } from 'react-bootstrap'
 import SearchBox from './SearchBox'
 
 const Header = () => {
@@ -25,9 +25,9 @@ const Header = () => {
 
             <SearchBox />
             <Nav className='ml-auto'>
-              <LinkContainer to='/login'>
+              <LinkContainer to='/'>
                 <Nav.Link>
-                  <i class='fa-solid fa-camera'></i>
+                  <i className='fa-solid fa-camera'></i>
                   Camera
                 </Nav.Link>
               </LinkContainer>
