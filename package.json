@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "start": "node backend/server",
     "server": "nodemon backend/server",
@@ -20,7 +21,8 @@
   },
   "homepage": "https://github.com/RishabhKukreja10/Profind_new#readme",
   "dependencies": {
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "mongoose": "^6.2.8"
   },
   "devDependencies": {
     "concurrently": "^7.0.0",
