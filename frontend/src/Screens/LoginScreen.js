@@ -1,21 +1,42 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Form, Button, Row, Col } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
 import FormContainer from '../components/FormContainer'
+import { login } from '../actions/userActions'
 
-const LoginScreen = ({ location }) => {
+const LoginScreen = ({ location, history }) => {
   const [email, setEnail] = useState('')
   const [password, setPassword] = useState('')
 
-  //   const redirect = location.search ? location.search.split('=')[1] : '/'
+  const dispatch = useDispatch()
+
+  const userLogin = useSelector((state) => state.userLogin)
+  const { loading, error, userInfo } = userLogin
+
+  // const redirect = location.search ? location.search.split('=')[1] : '/'
+
+  // useEffect(() => {
+  //   if (userInfo) {
+  //     history.push('/login')
+  //   }
+  // }, [history, userInfo])
 
   const submitHandler = (e) => {
     e.preventDefault()
+
+    dispatch(login(email, password))
   }
 
   return (
     <FormContainer>
       <h1>Sign In</h1>
+      {error && (
+        <h4 style={{ backgroundColor: '#FFB5B5' }}>
+          Invalid email or password
+        </h4>
+      )}
+      {loading && <h1>Loading ...</h1>}
       <Form onSubmit={submitHandler}>
         <Form.Group controlId='email' className='py-3'>
           <Form.Label>Email Address</Form.Label>
@@ -42,7 +63,9 @@ const LoginScreen = ({ location }) => {
       <Row className='py-3'>
         <Col>
           New Customer?{' '}
-          {/* <Link to={redirect ? `/register?redirect=${redirect}` : `/register`}> */}
+          {/* <Link to={redirect ? `/signup?redirect=${redirect}` : `/signup`}>
+            {' '}
+          </Link> */}
           <Link to='/signup'>Sign Up</Link>
         </Col>
       </Row>
