@@ -2,23 +2,43 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import FormContainer from '../components/FormContainer'
+import { signup } from '../actions/userActions'
+import { useDispatch, useSelector } from 'react-redux'
 
-const SignupScreen = ({ location }) => {
+const SignupScreen = ({ location, history }) => {
   const [name, setName] = useState('')
   const [email, setEnail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [message, setMessage] = useState('')
 
-  //   const redirect = location.search ? location.search.split('=')[1] : '/'
+  const dispatch = useDispatch()
+
+  const userSignup = useSelector((state) => state.userSignup)
+  const { loading, error, userInfo } = userSignup
+
+  // const redirect = location.search ? location.search.split('=')[1] : '/'
+
+  // useEffect(() => {
+  //   if (userInfo) {
+  //     history.push(redirect)
+  //   }
+  // }, [history, userInfo, redirect])
 
   const submitHandler = (e) => {
     e.preventDefault()
+
+    if (password !== confirmPassword) {
+      setMessage('Passwords do not match')
+    } else {
+      dispatch(signup(name, email, password))
+    }
   }
 
   return (
     <FormContainer>
       <h1>Sign Up</h1>
+      {error && <h4 style={{ backgroundColor: '#FFB5B5' }}>{error}</h4>}
       <Form onSubmit={submitHandler}>
         <Form.Group controlId='name' className='py-3'>
           <Form.Label>Name</Form.Label>
@@ -63,7 +83,7 @@ const SignupScreen = ({ location }) => {
       <Row className='py-3'>
         <Col>
           Existing User?{' '}
-          {/* <Link to={redirect ? `/register?redirect=${redirect}` : `/register`}> */}
+          {/* <Link to={redirect ? `/login?redirect=${redirect}` : `/login`}> */}
           <Link to='/login'>Login</Link>
         </Col>
       </Row>
