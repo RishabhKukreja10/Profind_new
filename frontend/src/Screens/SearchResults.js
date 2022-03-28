@@ -157,8 +157,8 @@ const SearchResults = () => {
     <>
       {productData ? (
         <>
-          <h1>Searh Results</h1>
-          <p>Showing 1 – 24 of 378 results for "iphone 12"</p>
+          <h1>Search Results</h1>
+          <p>{`Showing  results for ${location.state.keyword}`} </p>
           <Row>
             {productData.map((product) => (
               <Col sm={12} md={6} lg={4} xl={3}>
