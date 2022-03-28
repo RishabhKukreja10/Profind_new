@@ -6,6 +6,7 @@ import Footer from './components/Footer'
 import HomeScreen from './Screens/HomeScreen'
 import LoginScreen from './Screens/LoginScreen'
 import SignupScreen from './Screens/SignupScreen'
+import WishlistScreen from './Screens/WishlistScreen'
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
             <Route path='/search/:keyword' element={<HomeScreen />} />
             <Route path='/login' element={<LoginScreen />} />
             <Route path='/signup' element={<SignupScreen />} />
+            <Route path='/wishlist' element={<WishlistScreen />} />
           </Routes>
         </Container>
       </main>

@@ -56,7 +56,7 @@ const SignupScreen = ({ location }) => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
-        <Button type='submit' variant='primary' className='py-3'>
+        <Button type='submit' variant='dark' className='py-3'>
           Sign Up
         </Button>
       </Form>
