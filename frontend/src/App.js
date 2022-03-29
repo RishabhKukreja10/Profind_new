@@ -8,7 +8,7 @@ import LoginScreen from './Screens/LoginScreen'
 import SignupScreen from './Screens/SignupScreen'
 import WishlistScreen from './Screens/WishlistScreen'
 import Details from './Screens/detail'
-import Form from './Screens/form.js'
+
 const App = () => {
   return (
     <Router>
@@ -23,7 +23,7 @@ const App = () => {
             <Route path='/signup' element={<SignupScreen />} />
             <Route path='/wishlist' element={<WishlistScreen />} />
             <Route path='/details' element={<Details />} />
-            <Route path='/form' element={<Form/>}/>
+            
           </Routes>
         </Container>
       </main>

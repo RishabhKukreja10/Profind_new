@@ -45,6 +45,7 @@ const Details= () => {
               <Col>
        ₹ 19,999<button type="button" class="btn btn-warning btn-sm">Go To Store</button><br></br>
        <br></br>
+       
              ₹ 22,999<button type="button" class="btn btn-warning btn-sm">Go To Store</button>
               </Col>
               <br></br>
@@ -117,7 +118,7 @@ const Details= () => {
           </Row>
 <div>
     <br></br>
-    <LinkContainer to='/form'>
+    <LinkContainer to=''>
                 <Nav.Link>
                 
                   Add Comment

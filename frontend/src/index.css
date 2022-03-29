@@ -95,3 +95,8 @@ main {
 .h {
   font-weight: 260;
 }
+.btnn {
+  background-color: #f7f7f7;
+  padding: 0;
+  border: none;
+}

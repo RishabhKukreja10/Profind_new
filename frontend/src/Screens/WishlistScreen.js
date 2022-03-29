@@ -1,4 +1,4 @@
-import '../index'
+import '../index.css'
 import wish from './phone.jpg'
 import delet from './delete.png'
 import site from './flip.png'
@@ -24,7 +24,7 @@ const WishlistScreen= () => {
     </div>
     
     <div class="col-2">
-      <img src={delet} height="27px" width="34px" />
+      <button type="button" className='btnn'>   <img src={delet} height="27px" width="34px" /> </button>
     </div>
     <hr></hr>
        <div class="col-2">
@@ -42,7 +42,7 @@ const WishlistScreen= () => {
     </div>
     
     <div class="col-2">
-      <img src={delet} height="27px" width="34px" />
+      <button type="button" className='btnn'>  <img src={delet} height="27px" width="34px" /></button>
     </div>
     <hr></hr>
 
