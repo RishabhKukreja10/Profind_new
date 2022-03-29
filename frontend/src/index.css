@@ -57,3 +57,41 @@ main {
 .carousel a {
   margin: 0 auto;
 }
+.product-card-img {
+  /* width: 30vw;
+    height: 25vh; */
+  margin-bottom: 5vh;
+}
+.button {
+  height: 27px;
+  width: 34px;
+}
+.butnn {
+  top: 60%;
+
+  width: 350px;
+  height: 70px;
+  background-color: #f3e118;
+  padding: 0;
+  border: none;
+  position: fixed;
+}
+.brandname {
+  font-size: 40px;
+  font-weight: 430;
+}
+.text {
+  font-size: 30px;
+  font-weight: 370;
+}
+.product-card {
+  margin-bottom: 5vh;
+  position: fixed;
+  left: 18%;
+}
+.style {
+  text-align: center;
+}
+.h {
+  font-weight: 260;
+}

@@ -25,7 +25,7 @@ const Header = () => {
 
             <SearchBox />
             <Nav className='ml-auto'>
-              <LinkContainer to='/login'>
+              <LinkContainer to='/details'>
                 <Nav.Link>
                   <i class='fa-solid fa-camera'></i>
                   Camera

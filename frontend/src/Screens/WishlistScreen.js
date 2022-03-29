@@ -1,4 +1,4 @@
-import '../components/wishlist.css'
+import '../index'
 import wish from './phone.jpg'
 import delet from './delete.png'
 import site from './flip.png'
