@@ -8,6 +8,7 @@ import LoginScreen from './Screens/LoginScreen'
 import SignupScreen from './Screens/SignupScreen'
 import SearchResults from './Screens/SearchResults'
 import ProductResult from './Screens/ProductResult'
+import WishlistScreen from './Screens/WishListScreen'
 const App = () => {
   return (
     <Router>
@@ -19,6 +20,7 @@ const App = () => {
             <Route path='/search/:keyword' element={<ProductResult />} />
             <Route path='/login' element={<LoginScreen />} />
             <Route path='/signup' element={<SignupScreen />} />
+            <Route path='/wishlist' element={<WishlistScreen />} />
           </Routes>
         </Container>
       </main>

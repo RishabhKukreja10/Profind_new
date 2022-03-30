@@ -1,10 +1,25 @@
+import axios from 'axios'
 import React from 'react'
 import { Card, Row, Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 const Product = ({ product }) => {
+  async function handleClick(){
+    const config = { headers: { 'Content-Type': 'application/json'} }
+    const data= {
+      userId: JSON.parse(localStorage.getItem("userInfo"))._id,
+      name: product.name,
+      image: product.productImage,
+      amazonUrl: product.amazonLink,
+      flipkartUrl: product.flipkartLink,
+      amazonPrice: product.amazonPrice,
+      flipkartPrice : product.flipkartPrice
+    }
+    const res = await axios.post("/api/wishlist", data,config);
+  }
   return (
     <Card className='my-3 mx-3 py-3 px-3 rounded'>
+      <div id='wishlistSetting'><img src='/images/wishlist.png' onClick={()=>handleClick()}/></div>
       <Card.Img src={product.productImage} variant='top' />
 
       <Card.Body>

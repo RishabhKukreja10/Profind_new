@@ -2,30 +2,36 @@ import mongoose from 'mongoose'
 
 const productSchema = mongoose.Schema(
   {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: 'User',
-    },
     name: {
       type: String,
-      required: true,
+      required: true
     },
     image: {
       type: String,
-      required: true,
+      required: true
     },
-    price: {
+    amazonUrl:{
+      type: String,
+      required: true
+    },
+    flipkartUrl:{
+      type: String,
+      required: true
+    },
+    amazonPrice: {
       type: Number,
       required: true,
-      default: 0,
     },
+    flipkartPrice: {
+      type: Number,
+      required: true,
+    }
   },
   {
     timestamps: true,
   }
 )
 
-const Product = mongoose.model('Product', productSchema)
+const Products = mongoose.model('Products', productSchema)
 
-export default Product
+export default Products
