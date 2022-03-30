@@ -4,6 +4,7 @@ import connectDB from './config/db.js'
 import userRoutes from './routes/userRoutes.js'
 import search from './routes/search.js'
 import wishListRoute from './routes/wishListRoute.js'
+import commentRoute from './routes/commentRoute.js'
 
 
 dotenv.config()
@@ -21,5 +22,6 @@ app.get('/', (req, res) => {
 app.use('/api/users', userRoutes)
 app.use('/api/amazon', search)
 app.use('/api/wishlist',wishListRoute)
+app.use('/api/comment',commentRoute)
 
 app.listen(5000, console.log('Server running on port 5000'))

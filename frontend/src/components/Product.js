@@ -1,9 +1,10 @@
 import axios from 'axios'
 import React from 'react'
 import { Card, Row, Col } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Product = ({ product }) => {
+  const navigate = useNavigate()
   async function handleClick(){
     const config = { headers: { 'Content-Type': 'application/json'} }
     const data= {
@@ -17,8 +18,12 @@ const Product = ({ product }) => {
     }
     const res = await axios.post("/api/wishlist", data,config);
   }
+  async function handleNavigate(){
+    navigate(`/productDetail/${product.name}`, { state: product })
+  }
   return (
-    <Card className='my-3 mx-3 py-3 px-3 rounded'>
+    // <Link to={`/productDetail/${product.name}`}>
+      <Card className='my-3 mx-3 py-3 px-3 rounded' onClick={()=>handleNavigate()}>
       <div id='wishlistSetting'><img src='/images/wishlist.png' onClick={()=>handleClick()}/></div>
       <Card.Img src={product.productImage} variant='top' />
 
@@ -62,6 +67,7 @@ const Product = ({ product }) => {
         </Row>
       </Card.Body>
     </Card>
+    // </Link>
   )
 }
 

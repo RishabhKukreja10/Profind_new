@@ -9,6 +9,7 @@ import SignupScreen from './Screens/SignupScreen'
 import SearchResults from './Screens/SearchResults'
 import ProductResult from './Screens/ProductResult'
 import WishlistScreen from './Screens/WishListScreen'
+import ProductDetail from "./Screens/ProductDetail"
 const App = () => {
   return (
     <Router>
@@ -21,6 +22,7 @@ const App = () => {
             <Route path='/login' element={<LoginScreen />} />
             <Route path='/signup' element={<SignupScreen />} />
             <Route path='/wishlist' element={<WishlistScreen />} />
+            <Route path='/productDetail/:id' element={<ProductDetail />} />
           </Routes>
         </Container>
       </main>

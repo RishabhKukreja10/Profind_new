@@ -8,7 +8,7 @@ const addWishList = async (req, res) => {
     user: req.body.userId
   }
   try {
-    const product = await productModel.findOne({ flipkartUrl: req.body.flipkartUrl });
+    const product = await productModel.findOne({ amazonUrl: req.body.amazonUrl });
     if (product) {
       const chkAlreadyThere = wishListModel.findOne({ user: req.body.userId, product: product._id });
       if (chkAlreadyThere) res.status(200).json({ success: true, message: "Already wishlisted" })
