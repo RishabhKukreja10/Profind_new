@@ -1,4 +1,7 @@
 import mongoose from 'mongoose'
+import moment from 'moment'
+const date = moment().utcOffset("+0530").format('MMMM Do YYYY, h:mm a');
+
 
 const commentSchema = mongoose.Schema(
     {
@@ -15,6 +18,10 @@ const commentSchema = mongoose.Schema(
         comment: {
             type: String,
             required: true,
+        },
+        date: {
+            type: String,
+            default: date
         }
     },
     {

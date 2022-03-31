@@ -13,7 +13,7 @@ const addComment = async (req, res) => {
             comment.product = product._id;
             await CommentModel.create(comment);
             res.status(200).json({ success: true });
-        }else {
+        } else {
             let product = {
                 name: req.body.name,
                 image: req.body.productImage,
@@ -38,7 +38,6 @@ const addComment = async (req, res) => {
 const getComments = async (req, res) => {
     const userId = req.headers.userid;
     const amazonUrl = req.headers.amazonurl;
-    // console.log(amazonUrl);
     try {
         var comments = await CommentModel.find({ user: userId });
         let temp = [];
@@ -46,29 +45,21 @@ const getComments = async (req, res) => {
             comments.forEach(async (comment) => {
                 temp.push(comment.product);
             })
-            // console.log(temp);
             var response = await productModel.find({ _id: { "$in": temp } });
-            // console.log("1st" + response);
-            response =  response.filter((indi)=>{
+            response = response.filter((indi) => {
                 return (indi.amazonUrl == amazonUrl)
             })
-            var arr =[];
-            response.forEach((indi)=>{
+            var arr = [];
+            response.forEach((indi) => {
                 arr.push(indi._id);
             })
-            // console.log("2nd" + arr);
-            // console.log("3rd"+ comments);
-            comments = comments.filter((indi)=>{
+            comments = comments.filter((indi) => {
                 var bool = false;
-                for(let i =0; i<arr.length; ++i){
-                    // console.log("1st"+ indi.product)
-                    // console.log("2nd"+ arr[i]);
-                    // console.log(arr[i] == indi.product.toString());
-                    if(arr[i] == indi.product.toString()) bool = true;
+                for (let i = 0; i < arr.length; ++i) {
+                    if (arr[i] == indi.product.toString()) bool = true;
                 }
                 return bool;
             })
-            // console.log("4th"+ comments);
             res.status(200).json({ success: true, comments });
 
         } else res.status(200).json({ success: true });
@@ -77,4 +68,22 @@ const getComments = async (req, res) => {
     }
 }
 
-export { addComment, getComments }
+const deleteComment = async (req, res) => {
+    console.log(req.headers);
+    let commentid = req.headers.commentid;
+    try {
+        const deleteComment = await CommentModel.findOne({ _id:commentid })
+        // console.log(deleteComment);
+        if (deleteComment) {
+            const temp = await CommentModel.findByIdAndDelete(commentid)
+            res.status(200).json({ success: true })
+        }
+        else res.status(404).json({ success: false, error: "error 404" })
+    } catch (err) {
+        console.log(err);
+    }
+
+}
+
+
+export { addComment, getComments, deleteComment }

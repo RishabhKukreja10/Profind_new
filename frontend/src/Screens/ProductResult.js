@@ -13,6 +13,7 @@ const SearchResults = () => {
   const [productData, setProductData] = useState(null)
 
   useEffect(() => {
+    setProductData(null)
     const param = location.state.keyword
     const funcForFetch = async () => {
       

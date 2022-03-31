@@ -11,14 +11,11 @@ const addWishList = async (req, res) => {
   try {
     const product = await productModel.findOne({ amazonUrl: req.body.amazonUrl });
     if (product) {
-      console.log("if");
       const chkAlreadyThere = wishListModel.findOne({ user: req.body.userId, product: product._id });
       if (chkAlreadyThere){
-        console.log("already there");
         res.status(200).json({ success: true, message: "Already wishlisted" })
       } 
       else {
-        console.log("temp");
         wishList.product = product._id;
         const temp=await wishListModel.create(wishList);
         console.log(temp);
@@ -41,8 +38,6 @@ const addWishList = async (req, res) => {
       await wishListModel.create(wishList);
       res.status(200).json({ success: true });
     }
-
-
   } catch (err) {
     console.log(err);
   }
@@ -83,4 +78,6 @@ const deleteWishList = async (req, res) => {
     console.log(err);
   }
 }
+
+
 export { addWishList, getWishList, deleteWishList }
