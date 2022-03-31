@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 
-const SearchBox = () => {
+const SearchBox = ({clear}) => {
   const navigate = useNavigate()
   const [keyword, setKeyword] = useState('')
-
+  useEffect(()=>{/* 
+    if(!clear.localCompare("clear"))setKeyword(""); */
+  },[clear])
   const submitHandler = (e) => {
     e.preventDefault()
     const param = keyword.replace(/ /g, '+')

@@ -11,7 +11,7 @@ const HomeScreen = () => {
     // console.log(location.state); // result: 'some_value'
   }, [location])
   return (
-    <>
+    <div style={{marginTop:"9%"}}>
       <h1>Top Recommended Products</h1>
       <Row>
         {products.map((product) => (
@@ -20,7 +20,7 @@ const HomeScreen = () => {
           </Col>
         ))}
       </Row>
-    </>
+    </div>
   )
 }
 

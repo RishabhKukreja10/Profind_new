@@ -10,6 +10,9 @@ import SearchResults from './Screens/SearchResults'
 import ProductResult from './Screens/ProductResult'
 import WishlistScreen from './Screens/WishListScreen'
 import ProductDetail from "./Screens/ProductDetail"
+
+import ProfileScreen from './Screens/ProfileScreen'
+
 const App = () => {
   return (
     <Router>
@@ -23,6 +26,7 @@ const App = () => {
             <Route path='/signup' element={<SignupScreen />} />
             <Route path='/wishlist' element={<WishlistScreen />} />
             <Route path='/productDetail/:id' element={<ProductDetail />} />
+            <Route path='/profile' element={<ProfileScreen />} />
           </Routes>
         </Container>
       </main>

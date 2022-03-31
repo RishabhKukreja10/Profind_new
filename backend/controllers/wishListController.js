@@ -3,22 +3,30 @@ import productModel from '../models/productModel.js'
 // const ErrorResponse = require("../utils/errorResponse");=
 
 const addWishList = async (req, res) => {
-  // console.log(req.body);
+  //console.log("Hello there");
+  //console.log(req.body);
   let wishList = {
     user: req.body.userId
   }
   try {
     const product = await productModel.findOne({ amazonUrl: req.body.amazonUrl });
     if (product) {
+      console.log("if");
       const chkAlreadyThere = wishListModel.findOne({ user: req.body.userId, product: product._id });
-      if (chkAlreadyThere) res.status(200).json({ success: true, message: "Already wishlisted" })
+      if (chkAlreadyThere){
+        console.log("already there");
+        res.status(200).json({ success: true, message: "Already wishlisted" })
+      } 
       else {
+        console.log("temp");
         wishList.product = product._id;
-        await wishListModel.create(wishList);
+        const temp=await wishListModel.create(wishList);
+        console.log(temp);
         res.status(200).json({ success: true });
       }
     }
     else {
+      console.log("temp else");
       let product = {
         name: req.body.name,
         image: req.body.image,
@@ -28,7 +36,7 @@ const addWishList = async (req, res) => {
         flipkartPrice: req.body.flipkartPrice
       }
       const productCreated = await productModel.create(product);
-      // console.log(productCreated);
+      console.log(productCreated);
       wishList.product = productCreated._id;
       await wishListModel.create(wishList);
       res.status(200).json({ success: true });

@@ -28,8 +28,20 @@ const ProductDetail = () => {
         data.userId = JSON.parse(localStorage.getItem("userInfo"))._id;
         data.comment = keyword;
         const res = await axios.post("/api/comment", data, config);
+        async function funforfetch() {
+            const config = { headers: { 'Content-Type': 'application/json', userId: JSON.parse(localStorage.getItem("userInfo"))._id, amazonUrl: product.amazonLink } }
+            const res = await axios.get("/api/comment", config);
+            if (res.data.comments) { setComment(res.data.comments); }
+            else setComment([])
+            // console.log(res.data.comments);
+        }
+
+        funforfetch();
+
         // console.log(res);
     }
+
+    
     return (
         <>
             {
@@ -60,15 +72,15 @@ const ProductDetail = () => {
                                 </Row>
                                 <Row>
                                     <Col>
-                                        <img src="/images/Flipkart.png" height="75px" width="95px" /><br>
-                                        </br>
-                                        <img src="/images/Amazon.jpg" height="35px" width="65px" />
+                                        <img src="/images/Flipkart.png" height="40px" width="65px" /><br>
+                                        </br><br></br>
+                                        <img src="/images/Amazon.jpg" height="40px" width="65px" />
                                     </Col>
-                                    <Col>{product.amazonPrice}
+                                    <Col>₹{product.amazonPrice}
                                         <button type="button" class="btn btn-warning btn-sm">Go To Store</button><br></br>
                                         <br></br>
 
-                                        {product.flipkartPrice}<button type="button" class="btn btn-warning btn-sm">Go To Store</button>
+                                        ₹{product.flipkartPrice}<button type="button" class="btn btn-warning btn-sm">Go To Store</button>
                                     </Col>
                                     <br></br>
                                     <hr></hr>

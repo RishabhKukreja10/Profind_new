@@ -1,29 +1,41 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { Form, Button, Row, Col } from 'react-bootstrap'
-import FormContainer from '../components/FormContainer'
-import { signup } from '../actions/userActions'
+import { useNavigate } from 'react-router-dom'
+import { Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
+import { getUserDetails, updateUserProfile } from '../actions/userActions'
+import FormContainer from '../components/FormContainer'
 
-const SignupScreen = () => {
+const ProfileScreen = () => {
   const [name, setName] = useState('')
   const [email, setEnail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [message, setMessage] = useState(null)
+  const [message, setMessage] = useState('')
 
   const dispatch = useDispatch()
-
-  const userSignup = useSelector((state) => state.userSignup)
-  const { loading, error, userInfo } = userSignup
-
   const navigate = useNavigate()
 
+  const userDetails = useSelector((state) => state.userDetails)
+  const { loading, error, user } = userDetails
+
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
+
+  const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
+  const { success } = userUpdateProfile
+
   useEffect(() => {
-    if (userInfo) {
-      navigate('/')
+    if (!userInfo) {
+      navigate('/login')
+    } else {
+      if (!user.name) {
+        dispatch(getUserDetails('profile'))
+      } else {
+        setName(user.name)
+        setEnail(user.email)
+      }
     }
-  }, [userInfo, navigate])
+  }, [dispatch, userInfo, navigate, user])
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -31,15 +43,17 @@ const SignupScreen = () => {
     if (password !== confirmPassword) {
       setMessage('Passwords do not match')
     } else {
-      dispatch(signup(name, email, password))
+      dispatch(updateUserProfile({ id: user._id, name, email, password }))
     }
   }
 
   return (
     <FormContainer>
-      <h1>Sign Up</h1>
+      <h2>User Profile</h2>
+      {success && <h4>Profile Updated</h4>}
       {message && <h4 style={{ backgroundColor: '#FFB5B5' }}>{message}</h4>}
       {error && <h4 style={{ backgroundColor: '#FFB5B5' }}>{error}</h4>}
+
       <Form onSubmit={submitHandler}>
         <Form.Group controlId='name' className='py-3'>
           <Form.Label>Name</Form.Label>
@@ -78,16 +92,11 @@ const SignupScreen = () => {
           ></Form.Control>
         </Form.Group>
         <Button type='submit' variant='primary' className='py-3'>
-          Sign Up
+          Update
         </Button>
       </Form>
-      <Row className='py-3'>
-        <Col>
-          Existing User? <Link to='/login'>Login</Link>
-        </Col>
-      </Row>
     </FormContainer>
   )
 }
 
-export default SignupScreen
+export default ProfileScreen

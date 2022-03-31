@@ -2,14 +2,30 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 // import 'bootstrap/dist/css/bootstrap.css';
 const WishlistScreen = () => {
+  const navigate = useNavigate();
   const [wishlist, setWishList] = useState()
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
   useEffect(() => {
+    console.log("Goingtttt")
     async function funforfetch() {
-      const config = { headers: { 'Content-Type': 'application/json', userId: JSON.parse(localStorage.getItem("userInfo"))._id, } }
-      const res = await axios.get("/api/wishlist", config);
-      setWishList(res.data.response);
+      console.log("hello");
+      if(!userInfo)
+      {
+        navigate('/login')
+      }
+      const config = { headers: { 'Content-Type': 'application/json',Authorization: `Bearer ${userInfo.token}`, userId: JSON.parse(localStorage.getItem("userInfo"))._id, } }
+      console.log(userInfo.token)
+       
+          console.log("Going")
+        const res = await axios.get("/api/wishlist", config);
+        setWishList(res.data.response);
+               
+            
       // console.log(res.data.response);
     }
     funforfetch();
@@ -18,7 +34,7 @@ const WishlistScreen = () => {
     console.log(id);
     setWishList(undefined);
     try {
-      const config = { headers: { 'Content-Type': 'application/json', userId: JSON.parse(localStorage.getItem("userInfo"))._id, wishListid:id} }
+      const config = { headers: { 'Content-Type': 'application/json',Authorization: `Bearer ${userInfo.token}`,  userId: JSON.parse(localStorage.getItem("userInfo"))._id, wishListid:id} }
       const response = await axios.delete('/api/wishlist', config)
       // console.log(response);
       if (response) {
@@ -44,10 +60,12 @@ const WishlistScreen = () => {
                 </div>
                 <div className="col-6">
                   {data.name}<br></br>
-                  {data.flipkartPrice}<br></br>
+                  
                   <img src="/images/Amazon.jpg" height="65px" width="95px" />
-                  {data.amazonPrice}<br></br>
+                  ₹{data.flipkartPrice}<br></br>
+                  
                   <img src="/images/Flipkart.png" height="65px" width="95px" />
+                  ₹{data.amazonPrice}<br></br>
                 </div>
 
 

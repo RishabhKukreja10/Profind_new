@@ -15,6 +15,7 @@ const SearchResults = () => {
   useEffect(() => {
     const param = location.state.keyword
     const funcForFetch = async () => {
+      
       const config = { headers: { 'Content-Type': 'application/json' } }
       try {
         const flipkart = await axios.get(
@@ -149,12 +150,6 @@ const SearchResults = () => {
       return regx_ama;
     }
 
-
-
-
-
-
-
     if (flipkartData && amazonData) {
       const productsArray = []
       let product
@@ -177,7 +172,7 @@ const SearchResults = () => {
               name: amazon.name,
               flipkartLink: flipkart.link,
               amazonLink: amazon.product_link,
-              productImage: flipkart.thumbnail,
+              productImage: amazon.image,
               flipkartPrice: flipkart.current_price,
               amazonPrice: amazon.price,
             }
@@ -187,7 +182,7 @@ const SearchResults = () => {
         })
       })
       setProductData(productsArray)
-      // console.log(productsArray)
+      console.log(productsArray)
     }
   }, [flipkartData, amazonData])
 
@@ -195,7 +190,7 @@ const SearchResults = () => {
     <>
       {productData ? (
         <>
-          <h1>Searh Results</h1>
+          <h1>Search Results</h1>
           <p>Showing 1 – {productData.length} of {productData.length} results for "{location.state.keyword}"</p>
           <Row>
             {productData.map((product) => (
