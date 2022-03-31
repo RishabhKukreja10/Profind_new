@@ -109,4 +109,15 @@ const signupUser = asyncHandler(async (req, res) => {
   }
 })
 
-export { authUser, getUserProfile, signupUser, updateUserProfile }
+
+const getUserDetails = asyncHandler(async (req, res) => {
+   const userId = req.headers.userid;
+   try{
+     const user = await User.findById(userId);
+     res.status(200).json({success:true, user});
+   }catch(err){
+     console.log(err);
+   }
+})
+
+export { authUser, getUserProfile, signupUser, updateUserProfile, getUserDetails }

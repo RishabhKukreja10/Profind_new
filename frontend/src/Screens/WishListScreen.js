@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+
+import Loader from '../components/Loader'
 // import 'bootstrap/dist/css/bootstrap.css';
 const WishlistScreen = () => {
   const navigate = useNavigate();
@@ -61,17 +63,17 @@ const WishlistScreen = () => {
                 <div className="col-6">
                   {data.name}<br></br><br></br>
                   
-                  <img src="../images/flipkart2.jpeg" height="50px" width="80px" />
-                  ₹{data.amazonPrice}<br></br> 
+                  <img src="../images/flipkart2.jpeg" height="50px" width="80px" style={{marginRight:"25px"}}/>
+                  <b style={{fontWeight:"1000"}}>₹{data.amazonPrice}</b> <br></br> 
                   <a href={data.amazonLink}>
-                    <img src="../images/amazon1.png" height="65px" width="95px" />
-                    ₹{data.flipkartPrice}<br></br>
+                    <img src="../images/amazon1.png" height="65px" width="95px" style={{marginRight:"10px"}}/>
+                    <b style={{fontWeight:"1000"}}>₹{data.flipkartPrice}</b><br></br>
                   </a>
                 </div>
 
 
                 <div className="col-2">
-                  <button type="button" classNameName='btnn' onClick={() => handleDelete(data._id)}>   <img src="/images/bin.png" height="27px" width="25px" /> </button>
+                 <i className="fa-solid fa-trash cursor-hover"  onClick={() => handleDelete(data._id)}></i> 
                 </div>
                 <hr></hr>
               </>
@@ -82,7 +84,7 @@ const WishlistScreen = () => {
         </Container>
         :
 
-        <h2>Loading</h2>}
+        <Loader />}
     </div>
   );
 }

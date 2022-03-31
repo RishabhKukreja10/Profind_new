@@ -5,6 +5,10 @@ main {
 .bg-color {
   background: #499ee5;
 }
+.bg-color1 {
+  background: #cfdfed;
+  
+}
 
 .ml-auto {
   margin-left: auto;
@@ -75,6 +79,9 @@ a {
 .button {
   height: 27px;
   width: 34px;
+}
+.cursor-hover:hover{
+  cursor: pointer;
 }
 .butnn {/* 
   top: 60%; */

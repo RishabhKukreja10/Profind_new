@@ -35,9 +35,9 @@ const Product = ({ product }) => {
     // <Link to={`/productDetail/${product.name}`}>
     <>
     <Card className='my-3 mx-3 py-3 px-3 rounded' >
-    <div id='wishlistSetting'><img src='/images/wishlist.png' onClick={()=>handleClick()}/></div>
+    <div id='wishlistSetting'><i className="fa-regular fa-heart cursor-hover" onClick={()=>handleClick()}></i> </div>
     
-      <div onClick={()=>handleNavigate()}>
+      <div onClick={()=>handleNavigate()} className="cursor-hover">
         <Card.Img src={product.productImage} variant='top' />
       </div>
         <Card.Body>
@@ -48,12 +48,12 @@ const Product = ({ product }) => {
           {/* </a> */}
           <Row>
             <Col>
-              <a href={product.flipkartLink} target='_blank'>
+              <a href={product.flipkartLink} target='_blank' >
                 <Card.Text as='div' className='flipkart_div'>
                   <div className='my-3'>
                     <img
                       className='flipkart'
-                      src='../images/flipkart2.jpeg'
+                      src='../images/flip.png'
                       alt='Flipkart Symbol'
                       style={{height:"45px",width:"100%"}}
                     />
@@ -69,7 +69,7 @@ const Product = ({ product }) => {
                   <div className='my-3'>
                     <img
                       className='amazon'
-                      src='../images/amazon1.png'
+                      src='../images/amazon3.png'
                       alt='Amazon Symbol'
                       style={{height:"45px",width:"100%"}}
                     />

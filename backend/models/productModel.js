@@ -1,5 +1,8 @@
 import mongoose from 'mongoose'
 
+
+
+
 const productSchema = mongoose.Schema(
   {
     name: {
@@ -10,11 +13,11 @@ const productSchema = mongoose.Schema(
       type: String,
       required: true
     },
-    amazonUrl:{
+    amazonUrl: {
       type: String,
       required: true
     },
-    flipkartUrl:{
+    flipkartUrl: {
       type: String,
       required: true
     },
@@ -26,6 +29,7 @@ const productSchema = mongoose.Schema(
       type: Number,
       required: true,
     }
+
   },
   {
     timestamps: true,
