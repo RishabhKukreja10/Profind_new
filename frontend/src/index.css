@@ -65,6 +65,8 @@ a {
   margin-left: auto;
 }
 
+
+
 .product-card-img {
   /* width: 30vw;
     height: 25vh; */
@@ -74,15 +76,15 @@ a {
   height: 27px;
   width: 34px;
 }
-.butnn {
-  top: 60%;
+.butnn {/* 
+  top: 60%; */
 
-  width: 350px;
+  width: 80%;
   height: 70px;
-  background-color: #f3e118;
-  padding: 0;
+  /* background-color: #f3e118;
+   */padding: 0;
   border: none;
-  position: fixed;
+  /* position: fixed; */
 }
 .brandname {
   font-size: 40px;
@@ -94,8 +96,35 @@ a {
 }
 .product-card {
   margin-bottom: 5vh;
-  position: fixed;
+  align-items: centers;
+  justify-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  /* position: fixed; */
   left: 18%;
+}
+.contain_detail{
+  margin-top: 10%;
+}
+@media only screen and (max-width: 800px) {
+  .contain_detail{
+    margin-top: 20%;
+  }
+ 
+ 
+}
+
+.center{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+.center1{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;
 }
 .style {
   text-align: center;

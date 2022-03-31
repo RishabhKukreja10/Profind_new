@@ -36,7 +36,8 @@ const SignupScreen = () => {
   }
 
   return (
-    <FormContainer>
+    <div className='contain_detail'>
+        <FormContainer >
       <h1>Sign Up</h1>
       {message && <h4 style={{ backgroundColor: '#FFB5B5' }}>{message}</h4>}
       {error && <h4 style={{ backgroundColor: '#FFB5B5' }}>{error}</h4>}
@@ -87,6 +88,8 @@ const SignupScreen = () => {
         </Col>
       </Row>
     </FormContainer>
+    </div>
+    
   )
 }
 

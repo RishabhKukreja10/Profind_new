@@ -48,7 +48,8 @@ const ProfileScreen = () => {
   }
 
   return (
-    <FormContainer>
+    <div className='contain_detail'>
+        <FormContainer>
       <h2>User Profile</h2>
       {success && <h4>Profile Updated</h4>}
       {message && <h4 style={{ backgroundColor: '#FFB5B5' }}>{message}</h4>}
@@ -96,6 +97,8 @@ const ProfileScreen = () => {
         </Button>
       </Form>
     </FormContainer>
+    </div>
+    
   )
 }
 

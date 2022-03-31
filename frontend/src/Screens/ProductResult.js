@@ -3,7 +3,7 @@ import { Row, Col } from 'react-bootstrap'
 import Product from '../components/Product'
 import { useLocation, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-
+import Loader from '../components/Loader'
 const SearchResults = () => {
 
   const location = useLocation()
@@ -187,7 +187,7 @@ const SearchResults = () => {
   }, [flipkartData, amazonData])
 
   return (
-    <>
+    <div className='contain_detail'>
       {productData ? (
         <>
           <h1>Search Results</h1>
@@ -201,9 +201,9 @@ const SearchResults = () => {
           </Row>
         </>
       ) : (
-        <h3>Loading..</h3>
+        <Loader />
       )}
-    </>
+    </div>
   )
 }
 export default SearchResults

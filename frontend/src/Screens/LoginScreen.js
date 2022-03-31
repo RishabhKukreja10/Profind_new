@@ -29,7 +29,8 @@ const LoginScreen = ({ location, history }) => {
   }
 
   return (
-    <FormContainer>
+    <div className='contain_detail'>
+        <FormContainer>
       <h1>Sign In</h1>
       {error && (
         <h4 style={{ backgroundColor: '#FFB5B5' }}>
@@ -66,6 +67,8 @@ const LoginScreen = ({ location, history }) => {
         </Col>
       </Row>
     </FormContainer>
+    </div>
+    
   )
 }
 

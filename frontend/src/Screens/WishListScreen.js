@@ -46,7 +46,7 @@ const WishlistScreen = () => {
     }
   }
   return (
-    <>
+    <div className='contain_detail'>
       {wishlist ?
         <Container>
           <div className="row">
@@ -56,21 +56,22 @@ const WishlistScreen = () => {
 
                 </div>
                 <div className="col-2">
-                  <img src={data.image} classNameName='product-card-img' height="170px" width="100px" />
+                  <img src={data.image} classNameName='product-card-img' height="170px" width="150px" />
                 </div>
                 <div className="col-6">
-                  {data.name}<br></br>
+                  {data.name}<br></br><br></br>
                   
-                  <img src="/images/Amazon.jpg" height="65px" width="95px" />
-                  ₹{data.flipkartPrice}<br></br>
-                  
-                  <img src="/images/Flipkart.png" height="65px" width="95px" />
-                  ₹{data.amazonPrice}<br></br>
+                  <img src="../images/flipkart2.jpeg" height="50px" width="80px" />
+                  ₹{data.amazonPrice}<br></br> 
+                  <a href={data.amazonLink}>
+                    <img src="../images/amazon1.png" height="65px" width="95px" />
+                    ₹{data.flipkartPrice}<br></br>
+                  </a>
                 </div>
 
 
                 <div className="col-2">
-                  <button type="button" classNameName='btnn' onClick={() => handleDelete(data._id)}>   <img src="/images/bin.png" height="27px" width="34px" /> </button>
+                  <button type="button" classNameName='btnn' onClick={() => handleDelete(data._id)}>   <img src="/images/bin.png" height="27px" width="25px" /> </button>
                 </div>
                 <hr></hr>
               </>
@@ -82,7 +83,7 @@ const WishlistScreen = () => {
         :
 
         <h2>Loading</h2>}
-    </>
+    </div>
   );
 }
 

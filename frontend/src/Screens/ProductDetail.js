@@ -43,19 +43,22 @@ const ProductDetail = () => {
 
     
     return (
-        <>
+        <div className='contain_detail'>
             {
                 comments ?
-                    <Container>
+                    <Container  >
                         <Row>
-                            <Col md={5}>
-                                <img src="/images/iphone12.jpg" className='product-card' height="400px" width="230px" />
+                            
+                            <Col md={5} xs={12}>
                                 <div>
-                                    <button className='butnn'><img src="/images/wishlist.png" height="30px" width="20px" />  Wishlist</button>
-
+                                  <img src={product.productImage} className='product-card center' height="50%" width="230px" />
+                               
+                                </div>
+                                <div>
+                                    <button className='center1 butnn btn-warning'><img src="/images/wishlist.png" height="50%" width="30px" />Add To Wishlist</button>
                                 </div>
                             </Col>
-                            <Col md={7}>
+                            <Col md={7} xs={12}>
                                 <div className='brandname' >{product.name}</div><hr></hr>
                                 <Row>
                                     <Col className='text'>
@@ -72,9 +75,9 @@ const ProductDetail = () => {
                                 </Row>
                                 <Row>
                                     <Col>
-                                        <img src="/images/Flipkart.png" height="40px" width="65px" /><br>
+                                        <img src="../images/flipkart2.jpeg" height="45px" width="80px" /><br>
                                         </br><br></br>
-                                        <img src="/images/Amazon.jpg" height="40px" width="65px" />
+                                        <img src="/images/amazon1.png" height="45px" width="80px" />
                                     </Col>
                                     <Col>₹{product.amazonPrice}
                                         <button type="button" class="btn btn-warning btn-sm">Go To Store</button><br></br>
@@ -129,7 +132,7 @@ const ProductDetail = () => {
                     :
                     <h3>Loading</h3>
             }
-        </>
+        </div>
     );
 }
 
