@@ -3,12 +3,13 @@ import productModel from '../models/productModel.js'
 // const ErrorResponse = require("../utils/errorResponse");=
 
 const addComment = async (req, res) => {
+    console.log(req.body);
     let comment = {
         user: req.body.userId,
         comment: req.body.comment
     }
     try {
-        const product = await productModel.findOne({ amazonUrl: req.body.amazonUrl });
+        const product = await productModel.findOne({ amazonUrl: req.body.amazonLink });
         if (product) {
             comment.product = product._id;
             await CommentModel.create(comment);
@@ -38,6 +39,7 @@ const addComment = async (req, res) => {
 const getComments = async (req, res) => {
     const userId = req.headers.userid;
     const amazonUrl = req.headers.amazonurl;
+    console.log(req.headers.userId);
     try {
         var comments = await CommentModel.find({ user: userId });
         let temp = [];

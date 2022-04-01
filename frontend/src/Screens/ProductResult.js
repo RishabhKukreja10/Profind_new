@@ -171,9 +171,9 @@ const SearchResults = () => {
             c = 1
             product = {
               name: amazon.name,
-              flipkartLink: flipkart.link,
-              amazonLink: amazon.product_link,
-              productImage: amazon.image,
+              flipkartUrl: flipkart.link,
+              amazonUrl: amazon.product_link,
+              image: amazon.image,
               flipkartPrice: flipkart.current_price,
               amazonPrice: amazon.price,
             }

@@ -4,6 +4,7 @@ import { Card, Row, Col } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 const Product = ({ product }) => {
+  //console.log(product);
   const navigate = useNavigate()
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
@@ -15,13 +16,13 @@ const Product = ({ product }) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     }
-    console.log(userInfo.token)
+    //console.log(userInfo.token)
     const data= {
       userId: JSON.parse(localStorage.getItem("userInfo"))._id,
       name: product.name,
-      image: product.productImage,
-      amazonUrl: product.amazonLink,
-      flipkartUrl: product.flipkartLink,
+      image: product.image,
+      amazonUrl: product.amazonUrl,
+      flipkartUrl: product.flipkartUrl,
       amazonPrice: product.amazonPrice,
       flipkartPrice : product.flipkartPrice
       
@@ -38,7 +39,7 @@ const Product = ({ product }) => {
     <div id='wishlistSetting'><i className="fa-regular fa-heart cursor-hover" onClick={()=>handleClick()}></i> </div>
     
       <div onClick={()=>handleNavigate()} className="cursor-hover">
-        <Card.Img src={product.productImage} variant='top' />
+        <Card.Img src={product.image} variant='top' />
       </div>
         <Card.Body>
           {/* <a href={`/product/${product._id}`}> */}
@@ -48,7 +49,7 @@ const Product = ({ product }) => {
           {/* </a> */}
           <Row>
             <Col>
-              <a href={product.flipkartLink} target='_blank' >
+              <a href={product.flipkartUrl} target='_blank' >
                 <Card.Text as='div' className='flipkart_div'>
                   <div className='my-3'>
                     <img
@@ -64,7 +65,7 @@ const Product = ({ product }) => {
               </a>
             </Col>
             <Col>
-              <a href={product.amazonLink} target='_blank' >
+              <a href={product.amazonUrl} target='_blank' >
                 <Card.Text as='div' className='flipkart_div'>
                   <div className='my-3'>
                     <img

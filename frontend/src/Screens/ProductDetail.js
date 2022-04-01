@@ -14,7 +14,7 @@ const ProductDetail = () => {
     const [comments, setComment] = useState()
     const [user, setUser] = useState();
     async function funforfetch() {
-        const config = { headers: { 'Content-Type': 'application/json' ,Authorization: `Bearer ${userInfo.token}` ,userId: JSON.parse(localStorage.getItem("userInfo"))._id, amazonUrl: product.amazonLink } }
+        const config = { headers: { 'Content-Type': 'application/json' ,Authorization: `Bearer ${userInfo.token}` ,userId: JSON.parse(localStorage.getItem("userInfo"))._id, amazonUrl: product.amazonUrl} }
         const res = await axios.get("/api/comment", config);
         if (res.data.comments) { setComment(res.data.comments); }
         else setComment([])
@@ -33,9 +33,9 @@ const ProductDetail = () => {
         const data= {
           userId: JSON.parse(localStorage.getItem("userInfo"))._id,
           name: product.name,
-          image: product.productImage,
-          amazonUrl: product.amazonLink,
-          flipkartUrl: product.flipkartLink,
+          image: product.image,
+          amazonUrl: product.amazonUrl,
+          flipkartUrl: product.flipkartUrl,
           amazonPrice: product.amazonPrice,
           flipkartPrice : product.flipkartPrice
           
@@ -50,6 +50,26 @@ const ProductDetail = () => {
             const res = await axios.get("/api/users", config);
             // console.log(res);
             setUser(res.data.user)
+        
+            const configt = {
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${userInfo.token}`,
+                },
+              }
+              console.log(userInfo.token)
+              const data= {
+                userId: JSON.parse(localStorage.getItem("userInfo"))._id,
+                name: product.name,
+                image: product.image,
+                amazonUrl: product.amazonUrl,
+                flipkartUrl: product.flipkartUrl,
+                amazonPrice: product.amazonPrice,
+                flipkartPrice : product.flipkartPrice
+                
+              }
+              const rest = await axios.post("/api/addRecent", data,configt);
+
         }catch(err){
             console.log(err);
         }
@@ -92,13 +112,13 @@ const ProductDetail = () => {
                             
                             <Col md={5} xs={12}>
                                 <div>
-                                  <img src={product.productImage} className='product-card center' height="50%" width="230px" />
+                                  <img src={product.image} className='product-card center' height="50%" width="230px" />
                                
                                 </div>
                                 <div >
                                     <button onClick={()=>handleClick_Wishlist()} className='center1 butnn bg-color1'><i className="fa-regular fa-heart" style={{marginRight:"10px"}}></i>Add To Wishlist</button>
                                 </div>
-                            </Col>
+                           </Col>
                             <Col md={7} xs={12}>
                                 <div className='brandname' >{product.name}</div><hr></hr>
                                 <Row>

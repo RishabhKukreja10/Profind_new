@@ -4,7 +4,7 @@ import productModel from '../models/productModel.js'
 
 const addWishList = async (req, res) => {
   //console.log("Hello there");
-  //console.log(req.body);
+  
   let wishList = {
     user: req.body.userId
   }
