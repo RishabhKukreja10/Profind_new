@@ -7,8 +7,9 @@ const addComment = async (req, res) => {
         user: req.body.userId,
         comment: req.body.comment
     }
+    
     try {
-        const product = await productModel.findOne({ amazonUrl: req.body.amazonUrl });
+        const product = await productModel.findOne({ amazonUrl: req.body.amazonLink });
         if (product) {
             comment.product = product._id;
             await CommentModel.create(comment);
@@ -34,35 +35,25 @@ const addComment = async (req, res) => {
 
 }
 
-
 const getComments = async (req, res) => {
     const userId = req.headers.userid;
     const amazonUrl = req.headers.amazonurl;
+    var yourComments = []; var othersComments = [];
     try {
-        var comments = await CommentModel.find({ user: userId });
-        let temp = [];
-        if (comments) {
-            comments.forEach(async (comment) => {
-                temp.push(comment.product);
-            })
-            var response = await productModel.find({ _id: { "$in": temp } });
-            response = response.filter((indi) => {
-                return (indi.amazonUrl == amazonUrl)
-            })
-            var arr = [];
-            response.forEach((indi) => {
-                arr.push(indi._id);
-            })
-            comments = comments.filter((indi) => {
-                var bool = false;
-                for (let i = 0; i < arr.length; ++i) {
-                    if (arr[i] == indi.product.toString()) bool = true;
-                }
-                return bool;
-            })
-            res.status(200).json({ success: true, comments });
-
-        } else res.status(200).json({ success: true });
+        const product = await productModel.findOne({ amazonUrl });
+        if (product) {
+            const comments = await CommentModel.find({ product: product._id });
+            console.log(product._id);
+            if (comments) {
+                comments.forEach((comment) => {
+                    if (comment.user == userId) yourComments.push(comment);
+                    else othersComments.push(comment);
+                })
+                res.status(200).json({ success: true, yourComments, othersComments });
+            }
+            else res.status(200).json({ success: true, yourComments, othersComments });
+        }
+        else res.status(200).json({ success: true, yourComments, othersComments });
     } catch (err) {
         console.log(err);
     }
@@ -72,7 +63,7 @@ const deleteComment = async (req, res) => {
     console.log(req.headers);
     let commentid = req.headers.commentid;
     try {
-        const deleteComment = await CommentModel.findOne({ _id:commentid })
+        const deleteComment = await CommentModel.findOne({ _id: commentid })
         // console.log(deleteComment);
         if (deleteComment) {
             const temp = await CommentModel.findByIdAndDelete(commentid)
@@ -87,3 +78,37 @@ const deleteComment = async (req, res) => {
 
 
 export { addComment, getComments, deleteComment }
+
+
+// const getComments = async (req, res) => {
+//     const userId = req.headers.userid;
+//     const amazonUrl = req.headers.amazonurl;
+//     try {
+//         var comments = await CommentModel.find({ user: userId });
+//         let temp = [];
+//         if (comments) {
+//             comments.forEach(async (comment) => {
+//                 temp.push(comment.product);
+//             })
+//             var response = await productModel.find({ _id: { "$in": temp } });
+//             response = response.filter((indi) => {
+//                 return (indi.amazonUrl == amazonUrl)
+//             })
+//             var arr = [];
+//             response.forEach((indi) => {
+//                 arr.push(indi._id);
+//             })
+//             comments = comments.filter((indi) => {
+//                 var bool = false;
+//                 for (let i = 0; i < arr.length; ++i) {
+//                     if (arr[i] == indi.product.toString()) bool = true;
+//                 }
+//                 return bool;
+//             })
+//             res.status(200).json({ success: true, comments });
+
+//         } else res.status(200).json({ success: true });
+//     } catch (err) {
+//         console.log(err);
+//     }
+// }

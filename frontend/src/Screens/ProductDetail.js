@@ -1,5 +1,5 @@
 import '../index.css'
-import { Container, Row, Col } from 'react-bootstrap'   
+import { Container, Row, Col } from 'react-bootstrap'
 import { useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
@@ -11,30 +11,32 @@ const ProductDetail = () => {
     const userLogin = useSelector((state) => state.userLogin)
     const { userInfo } = userLogin
     const [keyword, setKeyword] = useState('');
-    const [comments, setComment] = useState()
+    const [yourComments, setyourComment] = useState();
+    const [othersComments, setOthersComment] = useState()
     const [user, setUser] = useState();
     async function funforfetch() {
-        const config = { headers: { 'Content-Type': 'application/json' ,Authorization: `Bearer ${userInfo.token}` ,userId: JSON.parse(localStorage.getItem("userInfo"))._id, amazonUrl: product.amazonLink } }
+        const config = { headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${userInfo.token}`, userId: JSON.parse(localStorage.getItem("userInfo"))._id, amazonUrl: product.amazonLink } }
         const res = await axios.get("/api/comment", config);
-        if (res.data.comments) { setComment(res.data.comments); }
-        else setComment([])
+        console.log(res.data);
+        setyourComment(res.data.yourComments);
+        setOthersComment(res.data.othersComments)
 
         // console.log(res.data.comments);
     }
-    useEffect(async() => {
+    useEffect(async () => {
         funforfetch();
-        const config = { headers: { 'Content-Type': 'application/json' ,Authorization: `Bearer ${userInfo.token}` ,userId: JSON.parse(localStorage.getItem("userInfo"))._id} }
-        try{
+        const config = { headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${userInfo.token}`, userId: JSON.parse(localStorage.getItem("userInfo"))._id } }
+        try {
             const res = await axios.get("/api/users", config);
             // console.log(res);
             setUser(res.data.user)
-        }catch(err){
+        } catch (err) {
             console.log(err);
         }
 
     }, [])
     async function handleAddComment() {
-        const config = { headers: { 'Content-Type': 'application/json',Authorization: `Bearer ${userInfo.token}` ,userId: JSON.parse(localStorage.getItem("userInfo"))._id, } }
+        const config = { headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${userInfo.token}`, userId: JSON.parse(localStorage.getItem("userInfo"))._id, } }
         var data = product;
         data.userId = JSON.parse(localStorage.getItem("userInfo"))._id;
         data.comment = keyword;
@@ -42,9 +44,9 @@ const ProductDetail = () => {
         funforfetch();
     }
     const handleDelete = async (id) => {
-        setComment(undefined);
+        setyourComment(undefined);
         try {
-            const config = { headers: { 'Content-Type': 'application/json',Authorization: `Bearer ${userInfo.token}`, commentid: id } }
+            const config = { headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${userInfo.token}`, commentid: id } }
             const response = await axios.delete('/api/comment', config)
             if (response) {
                 funforfetch()
@@ -59,7 +61,7 @@ const ProductDetail = () => {
     return (
         <>
             {
-                comments && user ?
+                yourComments && othersComments && user ?
                     <Container>
                         <Row>
                             <Col md={5}>
@@ -101,7 +103,7 @@ const ProductDetail = () => {
                                     <br></br>
                                 </Row>
                                 {
-                                    comments.map((data) => {
+                                    yourComments.map((data) => {
                                         // console.log(data);
                                         // console.log("came")
                                         return (
@@ -121,6 +123,8 @@ const ProductDetail = () => {
                                         )
                                     })
                                 }
+
+
                                 <div>
                                     <br></br>
                                     <textarea onChange={(e) => setKeyword(e.target.value)}>
@@ -129,6 +133,27 @@ const ProductDetail = () => {
                                     Add Comment
                                     <button type="button" onClick={() => handleAddComment()}> <img src="/images/plus.png" height="30" width="30" /></button>
                                 </div>
+
+                                {
+                                    othersComments.map((data) => {
+                                        // console.log(data);
+                                        // console.log("came")
+                                        return (
+                                            <Row>
+                                                <div className='style'>
+                                                </div><br></br>
+                                                <h7 className="h">{user.name}({data.date})</h7>
+                                                <div className="card-columns">
+                                                    <div className="card bg-light">
+                                                        <div className="card-body text-center">
+                                                            <span >{data.comment}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </Row>
+                                        )
+                                    })
+                                }
                             </Col>
 
 
