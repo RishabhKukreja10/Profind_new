@@ -12,17 +12,17 @@ const addWishList = async (req, res) => {
     const product = await productModel.findOne({ flipkartUrl: req.body.flipkartUrl });
     if (product) {
       console.log("product already there");
-      console.log(product)
+     // console.log(product)
       const chkAlreadyThere =await wishListModel.findOne({ user: req.body.userId, product: product._id });
       if (chkAlreadyThere){
         console.log("already wishlisted");
-        console.log(chkAlreadyThere);
+        //console.log(chkAlreadyThere);
         res.status(200).json({ success: true, message: "Already wishlisted" })
       } 
       else {
         wishList.product = product._id;
         const temp=await wishListModel.create(wishList);
-        console.log(temp);
+        //console.log(temp);
         res.status(200).json({ success: true });
       }
     }
@@ -37,7 +37,7 @@ const addWishList = async (req, res) => {
         flipkartPrice: req.body.flipkartPrice
       }
       const productCreated = await productModel.create(product);
-      console.log(productCreated);
+      //console.log(productCreated);
       wishList.product = productCreated._id;
       await wishListModel.create(wishList);
       res.status(200).json({ success: true });
@@ -51,7 +51,7 @@ const getWishList = async (req, res) => {
   const userId = req.headers.userid;
   try {
     const wishLists = await wishListModel.find({ user: userId });
-    console.log(wishLists);
+    //console.log(wishLists);
     const temp = [];
     if (wishLists) {
       wishLists.forEach(async (wishlist) => {
@@ -59,7 +59,7 @@ const getWishList = async (req, res) => {
       })
       // console.log(temp);
       var response = await productModel.find({ _id: { "$in": temp } });
-       console.log(response);
+       //console.log(response);
 
       res.status(200).json({ success: true, response });
 
@@ -84,6 +84,24 @@ const deleteWishList = async (req, res) => {
     console.log(err);
   }
 }
+const deleteWishList_screen = async (req, res) => {
+ // let wishListId = req.headers.wishlistid;
+ console.log(req.headers);
+  const  wishListId= await productModel.findOne({ flipkartUrl: req.headers.flipkarturl });
+  console.log(wishListId)
+  let userId = req.headers.userid;
+  try {
+    const deletepost = await wishListModel.findOne({ product: wishListId._id, user: userId })
+    // console.log(deletepost);
+    if (deletepost) {
+      const temp = await wishListModel.findByIdAndDelete(deletepost._id)
+      res.status(200).json({ success: true })
+    }
+    else res.status(404).json({ success: false, error: "error 404" })
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 
-export { addWishList, getWishList, deleteWishList }
+export { addWishList, getWishList, deleteWishList, deleteWishList_screen }

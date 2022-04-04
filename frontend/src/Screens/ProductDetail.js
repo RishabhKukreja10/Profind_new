@@ -5,13 +5,14 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 
-import {useNavigate } from 'react-router-dom'
+import {Link,useNavigate } from 'react-router-dom'
 const ProductDetail = () => {
     const location = useLocation();
     const product = location.state;
     const userLogin = useSelector((state) => state.userLogin)
     const { userInfo } = userLogin
     const [keyword, setKeyword] = useState('');
+    const [color, setColor] = useState("");
     const [comments, setComment] = useState()
     const [user, setUser] = useState();
     const navigate = useNavigate()
@@ -20,8 +21,6 @@ const ProductDetail = () => {
         const res = await axios.get("/api/comment", config);
         if (res.data.comments) { setComment(res.data.comments); }
         else setComment([])
-
-        // console.log(res.data.comments);
     }
 
     async function handleClick_Wishlist(){
@@ -31,6 +30,14 @@ const ProductDetail = () => {
             Authorization: `Bearer ${userInfo.token}`,
           },
         }
+        if(color==="blue")
+        {
+            handleDelete_wishlist();
+        }
+        else if(color==="")
+        {
+            setColor("blue")
+        
        // console.log(userInfo.token)
         const data= {
           userId: JSON.parse(localStorage.getItem("userInfo"))._id,
@@ -42,10 +49,32 @@ const ProductDetail = () => {
           flipkartPrice : product.flipkartPrice
         }   
         const res = await axios.post("/api/wishlist", data,config);
+        console.log(res);
+        }
       }
+    
+    async function check_Wishlist(){
+          const config = { headers: { 'Content-Type': 'application/json',Authorization: `Bearer ${userInfo.token}`, userId: JSON.parse(localStorage.getItem("userInfo"))._id, } }
+          const res = await axios.get("/api/wishlist", config);
+          let c=0;
+          console.log(res.data.response);
+          console.log(product);
+          res.data.response.forEach(element => {
+              if(element.flipkartUrl===(product.flipkartUrl)){
+                  setColor("blue");
+                  console.log("success");
+                  c=1;
+              }
+          });
+          if(c===0)
+          {
+            setColor("");
+          }
+    }
 
     useEffect(async() => {
         funforfetch();
+        check_Wishlist();
         const config = { headers: { 'Content-Type': 'application/json' ,Authorization: `Bearer ${userInfo.token}` ,userId: JSON.parse(localStorage.getItem("userInfo"))._id} }
         try{
             const res = await axios.get("/api/users", config);
@@ -58,7 +87,7 @@ const ProductDetail = () => {
                   Authorization: `Bearer ${userInfo.token}`,
                 },
               }
-              //console.log(userInfo.token)
+              
               const data= {
                 userId: JSON.parse(localStorage.getItem("userInfo"))._id,
                 name: product.name,
@@ -67,7 +96,6 @@ const ProductDetail = () => {
                 flipkartUrl: product.flipkartUrl,
                 amazonPrice: product.amazonPrice,
                 flipkartPrice : product.flipkartPrice
-                
               }
               const rest = await axios.post("/api/addRecent", data,configt);
 
@@ -91,7 +119,7 @@ const ProductDetail = () => {
     }
 
     const handleDelete = async (id) => {
-        setComment(undefined);
+        //setComment(undefined);
         try {
             const config = { headers: { 'Content-Type': 'application/json',Authorization: `Bearer ${userInfo.token}`, commentid: id } }
             const response = await axios.delete('/api/comment', config)
@@ -103,13 +131,20 @@ const ProductDetail = () => {
         }
 
     }
-
-    /*  const handleAmazon=()=>{
-            navigate(product.amazonUrl)
+   
+    async function handleDelete_wishlist(id) {
+        console.log(product.flipkartUrl);
+       // setWishList(undefined);
+        try {
+          const config = { headers: { 'Content-Type': 'application/json',Authorization: `Bearer ${userInfo.token}`,  userId: JSON.parse(localStorage.getItem("userInfo"))._id, flipkartUrl:product.flipkartUrl} }
+          const response = await axios.delete('/api/wishlist/del_wishlist', config)
+          // console.log(response);
+          check_Wishlist();
+        } catch (err) {
+          console.log(err);
         }
-        const handleFlipkart=()=>{
-            navigate(product.amazonUrl)
-        } */
+      }
+    
 
 
     
@@ -126,7 +161,12 @@ const ProductDetail = () => {
                                
                                 </div>
                                 <div >
-                                    <button onClick={()=>handleClick_Wishlist()} className='center1 butnn bg-color1'><i className="fa-regular fa-heart" style={{marginRight:"10px"}}></i>Add To Wishlist</button>
+                                    <button onClick={()=>handleClick_Wishlist()} className='center1 butnn bg-color1' >
+                                        {color===""?<i className="fa-regular fa-heart fa-xl" style={{marginRight:"10px"}}></i>
+                                        :
+                                        <i className="fa-solid fa-heart fa-xl" style={{marginRight:"10px"}}></i>
+                                        }
+                                        Add To Wishlist</button>
                                 </div>
                            </Col>
                             <Col md={7} xs={12}>
@@ -150,11 +190,16 @@ const ProductDetail = () => {
                                         </br><br></br>
                                         <img src="/images/amazon1.png" height="45px" width="80px" />
                                     </Col>
-                                    <Col>₹{product.amazonPrice}
-                                        <button type="button" class="btn btn-warning btn-sm" style={{marginLeft:"10px"}} >Go To Store</button><br></br>
+                                    <Col>₹{product.flipkartPrice}
+                                        <a href={product.flipkartUrl} target="_blank">
+                                        <button type="button" class="btn btn-warning btn-sm" style={{marginLeft:"10px"}}>Go To Store</button><br></br>
+                                        </a>
                                         <br></br>
 
-                                        ₹{product.flipkartPrice}<button type="button" class="btn btn-warning btn-sm" style={{marginLeft:"10px"}} >Go To Store</button>
+                                        ₹{product.amazonPrice}
+                                        <a href={product.amazonUrl} target="_blank">
+                                        <button type="button" class="btn btn-warning btn-sm" style={{marginLeft:"10px"}} >Go To Store</button>
+                                        </a>
                                     </Col>
                                     <br></br>
                                     <hr></hr>
@@ -185,13 +230,9 @@ const ProductDetail = () => {
                                 }
 
 
-
-
-
-
                                 <div>
                                     <br></br>
-                                    <textarea id="output" onChange={(e) => setKeyword(e.target.value)} value={keyword} style={{width:"100%",height:"80px"}}>
+                                    <textarea id="output" onChange={(e) => setKeyword(e.target.value)} style={{width:"100%",height:"80px"}}>
 
                                     </textarea> <br />
                                     <Button onClick={() => handleAddComment()} className="btn btn-primary">Add Comment</Button>
