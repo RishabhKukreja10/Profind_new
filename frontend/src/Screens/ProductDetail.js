@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 
+import {useNavigate } from 'react-router-dom'
 const ProductDetail = () => {
     const location = useLocation();
     const product = location.state;
@@ -13,6 +14,7 @@ const ProductDetail = () => {
     const [keyword, setKeyword] = useState('');
     const [comments, setComment] = useState()
     const [user, setUser] = useState();
+    const navigate = useNavigate()
     async function funforfetch() {
         const config = { headers: { 'Content-Type': 'application/json' ,Authorization: `Bearer ${userInfo.token}` ,userId: JSON.parse(localStorage.getItem("userInfo"))._id, amazonUrl: product.amazonUrl} }
         const res = await axios.get("/api/comment", config);
@@ -29,7 +31,7 @@ const ProductDetail = () => {
             Authorization: `Bearer ${userInfo.token}`,
           },
         }
-        console.log(userInfo.token)
+       // console.log(userInfo.token)
         const data= {
           userId: JSON.parse(localStorage.getItem("userInfo"))._id,
           name: product.name,
@@ -38,8 +40,7 @@ const ProductDetail = () => {
           flipkartUrl: product.flipkartUrl,
           amazonPrice: product.amazonPrice,
           flipkartPrice : product.flipkartPrice
-          
-        }
+        }   
         const res = await axios.post("/api/wishlist", data,config);
       }
 
@@ -57,7 +58,7 @@ const ProductDetail = () => {
                   Authorization: `Bearer ${userInfo.token}`,
                 },
               }
-              console.log(userInfo.token)
+              //console.log(userInfo.token)
               const data= {
                 userId: JSON.parse(localStorage.getItem("userInfo"))._id,
                 name: product.name,
@@ -78,8 +79,10 @@ const ProductDetail = () => {
     async function handleAddComment() {
         const config = { headers: { 'Content-Type': 'application/json',Authorization: `Bearer ${userInfo.token}` ,userId: JSON.parse(localStorage.getItem("userInfo"))._id, } }
         var data = product;
+        
         data.userId = JSON.parse(localStorage.getItem("userInfo"))._id;
         data.comment = keyword;
+        console.log(data);
         document.getElementById("output").value = "";
         const res = await axios.post("/api/comment", data, config);
         
@@ -100,6 +103,13 @@ const ProductDetail = () => {
         }
 
     }
+
+    /*  const handleAmazon=()=>{
+            navigate(product.amazonUrl)
+        }
+        const handleFlipkart=()=>{
+            navigate(product.amazonUrl)
+        } */
 
 
     
@@ -141,10 +151,10 @@ const ProductDetail = () => {
                                         <img src="/images/amazon1.png" height="45px" width="80px" />
                                     </Col>
                                     <Col>₹{product.amazonPrice}
-                                        <button type="button" class="btn btn-warning btn-sm" style={{marginLeft:"10px"}}>Go To Store</button><br></br>
+                                        <button type="button" class="btn btn-warning btn-sm" style={{marginLeft:"10px"}} >Go To Store</button><br></br>
                                         <br></br>
 
-                                        ₹{product.flipkartPrice}<button type="button" class="btn btn-warning btn-sm" style={{marginLeft:"10px"}}>Go To Store</button>
+                                        ₹{product.flipkartPrice}<button type="button" class="btn btn-warning btn-sm" style={{marginLeft:"10px"}} >Go To Store</button>
                                     </Col>
                                     <br></br>
                                     <hr></hr>

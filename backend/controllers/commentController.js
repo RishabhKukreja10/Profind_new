@@ -17,9 +17,9 @@ const addComment = async (req, res) => {
         } else {
             let product = {
                 name: req.body.name,
-                image: req.body.productImage,
-                amazonUrl: req.body.amazonLink,
-                flipkartUrl: req.body.flipkartLink,
+                image: req.body.image,
+                amazonUrl: req.body.amazonUrl,
+                flipkartUrl: req.body.flipkartUrl,
                 amazonPrice: req.body.amazonPrice,
                 flipkartPrice: req.body.flipkartPrice
             }

@@ -9,10 +9,14 @@ const addWishList = async (req, res) => {
     user: req.body.userId
   }
   try {
-    const product = await productModel.findOne({ amazonUrl: req.body.amazonUrl });
+    const product = await productModel.findOne({ flipkartUrl: req.body.flipkartUrl });
     if (product) {
-      const chkAlreadyThere = wishListModel.findOne({ user: req.body.userId, product: product._id });
+      console.log("product already there");
+      console.log(product)
+      const chkAlreadyThere =await wishListModel.findOne({ user: req.body.userId, product: product._id });
       if (chkAlreadyThere){
+        console.log("already wishlisted");
+        console.log(chkAlreadyThere);
         res.status(200).json({ success: true, message: "Already wishlisted" })
       } 
       else {
@@ -47,6 +51,7 @@ const getWishList = async (req, res) => {
   const userId = req.headers.userid;
   try {
     const wishLists = await wishListModel.find({ user: userId });
+    console.log(wishLists);
     const temp = [];
     if (wishLists) {
       wishLists.forEach(async (wishlist) => {
@@ -54,7 +59,8 @@ const getWishList = async (req, res) => {
       })
       // console.log(temp);
       var response = await productModel.find({ _id: { "$in": temp } });
-      // console.log(response);
+       console.log(response);
+
       res.status(200).json({ success: true, response });
 
     } else res.status(200).json({ success: true });
