@@ -51,35 +51,7 @@ const WishlistScreen = () => {
     <div className='contain_detail'>
       {wishlist ?
         <Container>
-          {/* <div className="row">
-            {wishlist.map((data) => (
-              <>
-                <div className="col-2">
-
-                </div>
-                <div className="col-2">
-                  <img src={data.image} classNameName='product-card-img' height="170px" width="150px" />
-                </div>
-                <div className="col-6">
-                  {data.name}<br></br><br></br>
-                  
-                  <img src="../images/flipkart2.jpeg" height="50px" width="80px" style={{marginRight:"25px"}}/>
-                  <b style={{fontWeight:"1000"}}>₹{data.amazonPrice}</b> <br></br> 
-                  <a href={data.amazonLink}>
-                    <img src="../images/amazon1.png" height="65px" width="95px" style={{marginRight:"10px"}}/>
-                    <b style={{fontWeight:"1000"}}>₹{data.flipkartPrice}</b><br></br>
-                  </a>
-                </div>
-
-
-                <div className="col-2">
-                 <i className="fa-solid fa-trash cursor-hover"  onClick={() => handleDelete(data._id)}></i> 
-                </div>
-                <hr></hr>
-              </>
-            ))}
-
-          </div> */}
+          
           <Row className='p-4'>
             {wishlist.map((data) => (
               <>
@@ -99,7 +71,7 @@ const WishlistScreen = () => {
                 </Col>
                 <Col sm={2} md={2} xs={1}>
               
-                 <i className="fa-solid fa-trash cursor-hover"  onClick={() => handleDelete(data._id)}></i> 
+                 <i className="fa-solid fa-trash cursor-hover fa-xl"  onClick={() => handleDelete(data._id)}></i> 
                 </Col>
                <hr></hr>
               </>

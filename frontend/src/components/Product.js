@@ -30,14 +30,15 @@ const Product = ({ product }) => {
     const res = await axios.post("/api/wishlist", data,config);
   }
   async function handleNavigate(){
-    navigate(`/productDetail/${product.name}`, { state: product })
+    const product_name=product.name.slice(0,product.name.indexOf(")")+1);
+    navigate(`/productDetail/${product_name}`, { state: product })
   }
   return (
     // <Link to={`/productDetail/${product.name}`}>
     <>
     <Card className='my-3 mx-3 py-3 px-3 rounded' >
-    <div id='wishlistSetting'><i className="fa-regular fa-heart cursor-hover" onClick={()=>handleClick()}></i> </div>
-    
+    {/* <div id='wishlistSetting'><i className="fa-regular fa-heart cursor-hover" onClick={()=>handleClick()}></i> </div>
+     */}
       <div onClick={()=>handleNavigate()} className="cursor-hover">
         <Card.Img src={product.image} variant='top' />
       </div>

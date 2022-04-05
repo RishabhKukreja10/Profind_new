@@ -1,15 +1,15 @@
 import CommentModel from '../models/CommentModel.js'
 import productModel from '../models/productModel.js'
+import User from '../models/userModel.js'
 // const ErrorResponse = require("../utils/errorResponse");=
-
 const addComment = async (req, res) => {
-    console.log(req.body);
     let comment = {
         user: req.body.userId,
         comment: req.body.comment
     }
+    
     try {
-        const product = await productModel.findOne({ amazonUrl: req.body.amazonLink });
+        const product = await productModel.findOne({ amazonUrl: req.body.amazonUrl });
         if (product) {
             comment.product = product._id;
             await CommentModel.create(comment);
@@ -35,36 +35,33 @@ const addComment = async (req, res) => {
 
 }
 
-
 const getComments = async (req, res) => {
+    console.log("Coming to backend");
     const userId = req.headers.userid;
     const amazonUrl = req.headers.amazonurl;
-    console.log(req.headers.userId);
+    var yourComments = []; var othersComments = [];
     try {
-        var comments = await CommentModel.find({ user: userId });
-        let temp = [];
-        if (comments) {
-            comments.forEach(async (comment) => {
-                temp.push(comment.product);
-            })
-            var response = await productModel.find({ _id: { "$in": temp } });
-            response = response.filter((indi) => {
-                return (indi.amazonUrl == amazonUrl)
-            })
-            var arr = [];
-            response.forEach((indi) => {
-                arr.push(indi._id);
-            })
-            comments = comments.filter((indi) => {
-                var bool = false;
-                for (let i = 0; i < arr.length; ++i) {
-                    if (arr[i] == indi.product.toString()) bool = true;
-                }
-                return bool;
-            })
-            res.status(200).json({ success: true, comments });
+        const product = await productModel.findOne({ amazonUrl });
+        if (product) {
+            console.log(product);
 
-        } else res.status(200).json({ success: true });
+            const comments = await CommentModel.find({ product: product._id }).populate({path:'user',model:User});
+           // .populate({path:'product',model:productModel})
+            console.log(comments);
+            if (comments) {
+                comments.forEach((comment) => {
+                    console.log(comment.user._id);
+                    console.log(userId)
+                    if (comment.user._id.toString() === userId) yourComments.push(comment);
+                    else othersComments.push(comment);
+
+
+                })
+                res.status(200).json({ success: true, yourComments, othersComments });
+            }
+            else res.status(200).json({ success: true, yourComments, othersComments });
+        }
+        else res.status(200).json({ success: true, yourComments, othersComments });
     } catch (err) {
         console.log(err);
     }

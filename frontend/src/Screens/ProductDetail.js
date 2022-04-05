@@ -13,14 +13,27 @@ const ProductDetail = () => {
     const { userInfo } = userLogin
     const [keyword, setKeyword] = useState('');
     const [color, setColor] = useState("");
-    const [comments, setComment] = useState()
+    const [yourComments, setyourComment] = useState();
+    const [othersComments, setOthersComment] = useState()
     const [user, setUser] = useState();
+    const [Specs, setSpecs] = useState();
     const navigate = useNavigate()
     async function funforfetch() {
+        console.log("funforfetch");
         const config = { headers: { 'Content-Type': 'application/json' ,Authorization: `Bearer ${userInfo.token}` ,userId: JSON.parse(localStorage.getItem("userInfo"))._id, amazonUrl: product.amazonUrl} }
         const res = await axios.get("/api/comment", config);
-        if (res.data.comments) { setComment(res.data.comments); }
-        else setComment([])
+        setyourComment(res.data.yourComments);
+        setOthersComment(res.data.othersComments)
+        console.log(res.data);
+    }
+    async function getSpecs() {
+        //console.log("funforfetch");
+        const query_url=product.flipkartUrl.slice(product.flipkartUrl.indexOf("m/")+2,product.flipkartUrl.length);
+        console.log(query_url);
+        const config = { headers: { 'Content-Type': 'application/json' }}
+        const res = await axios.get("https://flipkart.dvishal485.workers.dev/product/min/"+query_url, config);
+        setSpecs(res.data)
+        console.log(res.data.highlights[0]); 
     }
 
     async function handleClick_Wishlist(){
@@ -75,6 +88,7 @@ const ProductDetail = () => {
     useEffect(async() => {
         funforfetch();
         check_Wishlist();
+       //getSpecs();
         const config = { headers: { 'Content-Type': 'application/json' ,Authorization: `Bearer ${userInfo.token}` ,userId: JSON.parse(localStorage.getItem("userInfo"))._id} }
         try{
             const res = await axios.get("/api/users", config);
@@ -151,7 +165,7 @@ const ProductDetail = () => {
     return (
         <div className='contain_detail'>
             {
-                comments && user ?
+                 yourComments && othersComments  && user ?
                     <Container  >
                         <Row>
                             
@@ -162,11 +176,14 @@ const ProductDetail = () => {
                                 </div>
                                 <div >
                                     <button onClick={()=>handleClick_Wishlist()} className='center1 butnn bg-color1' >
-                                        {color===""?<i className="fa-regular fa-heart fa-xl" style={{marginRight:"10px"}}></i>
+                                        {color===""?<><i className="fa-regular fa-heart fa-xl" style={{marginRight:"10px"}}></i><span>Add To Wishlist</span></>
                                         :
+                                        <>
                                         <i className="fa-solid fa-heart fa-xl" style={{marginRight:"10px"}}></i>
+                                        Wishlisted
+                                        </>
                                         }
-                                        Add To Wishlist</button>
+                                       </button>
                                 </div>
                            </Col>
                             <Col md={7} xs={12}>
@@ -175,6 +192,7 @@ const ProductDetail = () => {
                                     <Col className='text'>
                                         Key Specifications</Col>
                                     <Col>
+                                    
                                         •4 GB RAM | 128 GB ROM | Expandable Upto 256 GB<br></br>
                                         •5000 mAh Battery<br></br>
                                         •64MP + 8MP + 2MP + 2MP | 16MP Front Camera<br></br>
@@ -206,9 +224,7 @@ const ProductDetail = () => {
                                     <br></br>
                                 </Row>
                                 {
-                                    comments.map((data) => {
-                                        // console.log(data);
-                                        // console.log("came")
+                                    yourComments.map((data) => {
                                         return (
                                             <Row>
                                                 <div className='style'>
@@ -221,6 +237,25 @@ const ProductDetail = () => {
                                                             <div>
                                                                 <img className="card-text cursor-hover" src='/images/bin.png' height="20px" onClick={() => handleDelete(data._id)} ></img>
                                                             </div>
+                                                             </div>
+                                                    </div>
+                                                </div>
+                                            </Row>
+                                        )
+                                    })
+                                }
+                                {
+                                    othersComments.map((data) => {
+                                        return (
+                                            <Row>
+                                                <div className='style'>
+                                                </div><br></br>
+                                                <h6 className="h">{data.user.name}({data.date})</h6>
+                                                <div class="card-columns">
+                                                    <div class="card bg-light">
+                                                        <div class="card-body " style={{display:"flex",flexDirection:"row"}}>
+                                                            <div style={{width:"90% "}}>{data.comment}</div>
+                                                            
                                                              </div>
                                                     </div>
                                                 </div>
@@ -254,20 +289,3 @@ const ProductDetail = () => {
 export default ProductDetail;
 
 
-
-//   {
-//     comment.map(() => (
-        // <Row>
-        //     <div className='style'>
-        //     </div><br></br>
-        //     <h7 className="h">user4  (4 month ago)</h7>
-        //     <div class="card-columns">
-        //         <div class="card bg-light">
-        //             <div class="card-body text-center">
-        //                 <p class="card-text">{comment.comment}</p>
-        //             </div>
-        //         </div>
-        //     </div>
-        // </Row>
-//     ))
-// }
